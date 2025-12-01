@@ -1,0 +1,25 @@
+{
+  "name": "books",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/jsokka/hy-mooc-fso-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/jsokka/hy-mooc-fso-graphql/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsokka/hy-mooc-fso-graphql.git"
+  },
+  "license": "MIT",
+  "author": "Jarmo Sokka",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.2.0",
+    "graphql": "^16.12.0"
+  }
+}
