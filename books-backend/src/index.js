@@ -26,6 +26,7 @@ const typeDefs = /* gql */`
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
     me: User
+    genres: [String!]!
   }
 
   type Mutation {
@@ -64,6 +65,7 @@ const typeDefs = /* gql */`
   type User {
   username: String!
   favoriteGenre: String!
+  recommendations: [Book!]!
   id: ID!
 }
 
@@ -88,7 +90,8 @@ const resolvers = {
       return Book.find(query)
     },
     allAuthors: async () => await Author.find({}),
-    me: (root, args, { currentUser }) => currentUser
+    me: (root, args, { currentUser }) => currentUser,
+    genres: async () => await Book.distinct('genres')
   },
   Book: {
     author: async (root) => {
@@ -98,6 +101,12 @@ const resolvers = {
   Author: {
     bookCount: async (root) => {
       return await Book.countDocuments({ author: root._id })
+    }
+  },
+  User: {
+    recommendations: async (root, args, { currentUser }) => {
+      const favoriteGenre = currentUser.favoriteGenre
+      return await Book.find({ genres: { $in: [favoriteGenre] } })
     }
   },
   Mutation: {

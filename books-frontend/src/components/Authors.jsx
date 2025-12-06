@@ -23,7 +23,11 @@ const Authors = (props) => {
         setSelectedAuthor(null)
       }
     })
+  }
 
+  const selectAuthor = (author) => {
+    setSelectedAuthor(author?.name)
+    setNewBirthYear(author?.born)
   }
 
   if (!props.show) {
@@ -58,11 +62,11 @@ const Authors = (props) => {
               </td>
               <td>{a.bookCount}</td>
               <td>
-                {!selectedAuthor && <button onClick={() => setSelectedAuthor(a.name)}>edit</button>}
+                {!selectedAuthor && props.loggedIn && <button onClick={() => selectAuthor(a)}>edit</button>}
                 {selectedAuthor && selectedAuthor === a.name && (
                   <div>
                     <button type="submit" onClick={handleSaveRow}>save</button>
-                    <button type="button" onClick={() => setSelectedAuthor(null)}>cancel</button>
+                    <button type="button" onClick={() => selectAuthor(null)}>cancel</button>
                   </div>
                 )}
               </td>
