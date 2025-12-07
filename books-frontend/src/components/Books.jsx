@@ -9,7 +9,6 @@ const Books = (props) => {
     variables: {
       genre: selectedGenre
     },
-    fetchPolicy: 'network-only',
     skip: !props.show
   })
   const genresResult = useQuery(GENRES, {
@@ -20,10 +19,10 @@ const Books = (props) => {
   const genres = genresResult?.data?.genres || []
 
   useEffect(() => {
-    if (!selectedGenre) {
+    if (props.show && !selectedGenre) {
       genresResult.refetch()
     }
-  }, [genresResult, selectedGenre])
+  }, [props.show, genresResult, selectedGenre])
 
   if (!props.show) {
     return null
@@ -43,7 +42,7 @@ const Books = (props) => {
           {selectedGenre === g ? <b>{g}</b> : g}
         </button>
       )}
-      {result.loading ? <div>Loading...</div> : (
+      {result.loading ? <p>Loading...</p> : (
         <>
           {selectedGenre && <p>in genre <b>{selectedGenre}</b></p>}
           <BookList books={books} />
